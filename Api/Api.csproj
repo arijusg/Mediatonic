@@ -98,9 +98,11 @@
     <Compile Include="Ninject\NinjectDependencyResolver.cs" />
     <Compile Include="Ninject\NinjectDependencyScope.cs" />
     <Compile Include="Ninject\NinjectServicesModule.cs" />
+    <Compile Include="Services\AnimalFacotry.cs" />
     <Compile Include="Services\AnimalFeedingService.cs" />
     <Compile Include="Services\AnimalService.cs" />
     <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Services\TestableDateTime.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Startup_WebApi.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

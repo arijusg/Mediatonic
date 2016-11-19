@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Api.Models;
 
 namespace Api.Services
@@ -13,19 +9,25 @@ namespace Api.Services
     }
     public class AnimalService : IAnimalService
     {
-        private readonly Func<DateTime> _now;
-        public AnimalService(Func<DateTime> now)
+        private readonly ITestableDateTime _testableDateTime;
+        private readonly IAnimalFactory _animalFactory;
+
+        public AnimalService(ITestableDateTime testableDateTime, IAnimalFactory animalFactory)
         {
-            _now = now;
+            _testableDateTime = testableDateTime;
+            _animalFactory = animalFactory;
         }
 
-        public AnimalService()
-        {
-            _now = () => DateTime.UtcNow;
-        }
         public List<Animal> GetUserAnimals(User user)
         {
-            return new List<Animal> {new Animal(1, 50, 1, 50, 1)};
+            var animal = _animalFactory.GetAnimal();
+           // animal.LastProcess = _testableDateTime.UtcNow();
+            //process lvl
+            var minuteDIff = _testableDateTime.UtcNow().Subtract(animal.LastProcess).Minutes;
+            animal.HungryLevel += animal.HungryIncrement*minuteDIff;
+            animal.HappyLevel -= animal.HappyDececrement*minuteDIff;
+
+            return new List<Animal> {animal};
         }
     }
 }

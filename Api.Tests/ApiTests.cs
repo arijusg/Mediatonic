@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Microsoft.Owin.Testing;
@@ -14,11 +15,22 @@ namespace Api.Tests
     public class ApiTests
     {
         private TestServer _server;
-
+        private MockHelper _mockHelper;
+        private DateTime _testDateTime;
+        private Animal _testNAnimal;
         [OneTimeSetUp]
         public void FixtureInit()
         {
+            _mockHelper = new MockHelper();
             _server = TestServer.Create<Api.Startup>();
+
+            _testDateTime = new DateTime(2005, 01, 01, 13, 11, 0, DateTimeKind.Utc);
+
+            _testNAnimal = new Animal(1, 50, 1, 50, 1);
+            _testNAnimal.LastProcess = _testDateTime;
+            _mockHelper.MockOut<IAnimalFactory>().Setup(x => x.GetAnimal()).Returns(_testNAnimal);
+            
+            _mockHelper.MockOut<ITestableDateTime>().Setup(x => x.UtcNow()).Returns(_testDateTime);
         }
 
         [OneTimeTearDown]
@@ -27,13 +39,15 @@ namespace Api.Tests
             _server.Dispose();
         }
 
+        [SetUp]
+        public void Setup()
+        {
+           
+        }
+
         [Test]
         public async Task GetUser()
         {
-            //TODO mockout
-            //var m = new MockHelper();
-            //m.MockOut<IUserService>().Setup(x => x.GetUser(It.IsAny<int>())).Returns(new User(2));
-
             var expectedUser = new User(1);
 
             var response = await _server.HttpClient.GetAsync("/api/user/1");
@@ -97,43 +111,54 @@ namespace Api.Tests
             Assert.AreEqual(51, petAnimal.HappyLevel);
         }
 
-        //[Test]
-        //public async Task TestDecreasingHappiness()
-        //{
-        //    int userId = 1;
-        //    var expectedAnimal = new Animal(1, 50, 1, 50, 1);
+        [Test]
+        public async Task TestDecreasingHappiness()
+        {
+          
+            int userId = 1;
+            var expectedAnimal = new Animal(1, 50, 1, 50, 1);
 
-        //    var response = await _server.HttpClient.GetAsync($"/api/user/{userId}/animals");
-        //    var userAnimals = await response.Content.ReadAsAsync<List<Animal>>();
-        //    Animal animal = userAnimals.First(x => x.Id == 1);
+            var response = await _server.HttpClient.GetAsync($"/api/user/{userId}/animals");
+            var userAnimals = await response.Content.ReadAsAsync<List<Animal>>();
+            Animal animal = userAnimals.First(x => x.Id == 1);
 
-        //    //Inject time adaptor to fake time utc
-        //    var response2 = await _server.HttpClient.GetAsync($"/api/user/{userId}/animals");
-        //    var userAnimals2 = await response.Content.ReadAsAsync<List<Animal>>();
-        //    Animal animal2 = userAnimals.First(x => x.Id == 1);
 
-        //    Assert.AreEqual(50, animal.HappyLevel);
-        //    Assert.AreEqual(49, animal2.HappyLevel);
-        //}
+            DateTime secondDate = _testDateTime.AddMinutes(5);
+            _mockHelper.MockOut<ITestableDateTime>().Setup(x => x.UtcNow()).Returns(secondDate);
 
-        //[Test]
-        //public async Task TestIncreasingHungriness()
-        //{
-        //    int userId = 1;
-        //    var expectedAnimal = new Animal(1, 50, 1, 50, 1);
+            var response2 = await _server.HttpClient.GetAsync($"/api/user/{userId}/animals");
+            var userAnimals2 = await response2.Content.ReadAsAsync<List<Animal>>();
+            Animal animal2 = userAnimals2.First(x => x.Id == 1);
 
-        //    var response = await _server.HttpClient.GetAsync($"/api/user/{userId}/animals");
-        //    var userAnimals = await response.Content.ReadAsAsync<List<Animal>>();
-        //    Animal animal = userAnimals.First(x => x.Id == 1);
+           // Assert.AreEqual(start, animal.LastProcess);
 
-        //    //Inject time adaptor to fake time utc
-        //    var response2 = await _server.HttpClient.GetAsync($"/api/user/{userId}/animals");
-        //    var userAnimals2 = await response.Content.ReadAsAsync<List<Animal>>();
-        //    Animal animal2 = userAnimals.First(x => x.Id == 1);
+            Assert.AreEqual(50, animal.HappyLevel);
+            Assert.AreEqual(45, animal2.HappyLevel);
+        }
 
-        //    Assert.AreEqual(50, animal.HungryLevel);
-        //    Assert.AreEqual(55, animal2.HungryLevel);
-        //}
+        [Test]
+        public async Task TestIncreasingHungriness()
+        {
+
+            int userId = 1;
+
+            var response = await _server.HttpClient.GetAsync($"/api/user/{userId}/animals");
+            var userAnimals = await response.Content.ReadAsAsync<List<Animal>>();
+            Animal animal = userAnimals.First(x => x.Id == 1);
+
+            //Inject time adaptor to fake time utc
+
+            DateTime secondDate = _testDateTime.AddMinutes(5);
+            _mockHelper.MockOut<ITestableDateTime>().Setup(x => x.UtcNow()).Returns(secondDate);
+
+
+            var response2 = await _server.HttpClient.GetAsync($"/api/user/{userId}/animals");
+            var userAnimals2 = await response2.Content.ReadAsAsync<List<Animal>>();
+            Animal animal2 = userAnimals2.First(x => x.Id == 1);
+
+            Assert.AreEqual(50, animal.HungryLevel);
+            Assert.AreEqual(55, animal2.HungryLevel);
+        }
 
     }
 }

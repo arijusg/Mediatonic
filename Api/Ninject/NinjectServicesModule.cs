@@ -15,6 +15,8 @@ namespace Api.Ninject
 
             Kernel.Bind<IUserService>().To<UserService>();
             Kernel.Bind<IAnimalService>().To<AnimalService>();
+            Kernel.Bind<ITestableDateTime>().To<TestableDateTime>();
+            Kernel.Bind<IAnimalFactory>().To<AnimalFacotry>();
         }
     }
 }

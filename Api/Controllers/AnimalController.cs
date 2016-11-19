@@ -12,10 +12,10 @@ namespace Api.Controllers
         private readonly IUserService _userService;
         private readonly IAnimalService _animalService;
 
-        public AnimalController()
+        public AnimalController( IUserService userService, IAnimalService animalService)
         {
-            _userService = new UserService();
-            _animalService = new AnimalService();
+            _userService = userService;
+            _animalService = animalService;
         }
 
         [Route("feed")]
