@@ -13,7 +13,7 @@ namespace SelfHost
             using (Microsoft.Owin.Hosting.WebApp.Start<Startup>(baseAddress))
             {
                 var client = new HttpClient();
-                var response = client.GetAsync(baseAddress + "api/values").Result;
+                var response = client.GetAsync(baseAddress + "api/user/1").Result;
 
                 Console.WriteLine(response);
                 Console.WriteLine(response.Content.ReadAsStringAsync().Result);
@@ -21,5 +21,6 @@ namespace SelfHost
                 Console.ReadLine();
             }
         }
+
     }
 }
