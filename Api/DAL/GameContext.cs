@@ -1,24 +1,34 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Data.Entity;
-//using System.Data.Entity.ModelConfiguration.Conventions;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using Api.Entities;
+﻿using System.Data.Common;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using Api.Entities;
 
-//namespace Api.DAL
-//{
-//    public class GameContext : DbContext
-//    {
-//        public GameContext() : base("GameContext") { }
+namespace Api.DAL
+{
+    public class GameContext : DbContext
+    {
+        
+        public GameContext() : base("GameContext")
+        {
+            Init();
+        }
 
-//        public DbSet<User> Users { get; set; }
-//        public DbSet<Animal> Animals { get; set; }
+        public GameContext(DbConnection connection) : base(connection, true)
+        {
+            Init();
+        }
 
-//        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-//        {
-//            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-//        }
-//    }
-//}
+        private void Init()
+        {
+            Database.SetInitializer(new GameInitializer());
+        }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Animal> Animals { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+        }
+    }
+}

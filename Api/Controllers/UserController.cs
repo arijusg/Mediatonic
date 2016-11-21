@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Http;
-using Api.Models;
+﻿using System.Web.Http;
 using Api.Services;
 
 namespace Api.Controllers
@@ -10,12 +7,10 @@ namespace Api.Controllers
     public class UserController : ApiController
     {
         private readonly IUserService _userService;
-        private readonly IAnimalService _animalService;
 
-        public UserController(IUserService userService, IAnimalService animalService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _animalService = animalService;
         }
 
         [Route("{id:int}")]
@@ -23,20 +18,12 @@ namespace Api.Controllers
         public IHttpActionResult Get(int id)
         {
             var user = _userService.GetUser(id);
-
-            if (user.Id == 0)
+            
+            if (user == null)
                 return NotFound();
             
             return Ok(user);
         }
-
-        [Route("{id:int}/animals")]
-        [HttpGet]
-        public IHttpActionResult GetUserAnimals(int id)
-        {
-            var user = _userService.GetUser(id);
-            return Ok(_animalService.GetUserAnimals(user));
-        }
-       
+               
     }
 }

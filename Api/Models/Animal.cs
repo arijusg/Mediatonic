@@ -1,27 +1,30 @@
 ﻿using System;
-using Api.Services;
+using Newtonsoft.Json;
 
 namespace Api.Models
 {
     public class Animal
     {
-        public Animal(int id, int happyLevel, int happyDecrement, int hungryLevel, int hungerIncrement)
+        public Animal(int id, int happyLevel, int happyLevelChange, int hungryLevel, int hungryLevelChange, DateTime lastAction)
         {
             Id = id;
             HappyLevel = happyLevel;
-            HappyDececrement = happyDecrement;
+            HappyLevelChange = happyLevelChange;
             HungryLevel = hungryLevel;
-            HungryIncrement = hungerIncrement;
+            HungryLevelChange = hungryLevelChange;
+            LastAction = lastAction;
         }
 
         public int Id { get; }
-        public int HappyLevel { get; set; }
-        public int HappyDececrement { get; }
 
-        public int HungryLevel { get; set; }
-        public int HungryIncrement { get; }
+        public int HappyLevel { get; }
 
-        //public DateTime LastProcess { get; set; } = new DateTime(2005, 01, 01, 13, 11, 0, DateTimeKind.Utc);
-        public DateTime LastProcess { get; set; }
+        public int HappyLevelChange { get;}
+
+        public int HungryLevel { get; }
+
+        public int HungryLevelChange { get; }
+
+        public DateTime LastAction { get; }
     }
 }

@@ -18,6 +18,12 @@ namespace SelfHost
                 Console.WriteLine(response);
                 Console.WriteLine(response.Content.ReadAsStringAsync().Result);
 
+                //TODO
+                var response1 = client.GetAsync(baseAddress + "api/animal/user/1").Result;
+
+                Console.WriteLine(response1);
+                Console.WriteLine(response1.Content.ReadAsStringAsync().Result);
+
                 Console.ReadLine();
             }
         }

@@ -1,18 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Api.DAL;
 using Api.Models;
 
 namespace Api.Services
 {
     public class UserService : IUserService
     {
+        private readonly GameContext _context;
+        private readonly IUserMapper _userMapper;
+
+        public UserService(GameContext context, IUserMapper userMapper)
+        {
+            _context = context;
+            _userMapper = userMapper;
+        }
         public User GetUser(int id)
         {
-            //TODO implement
-            return new User(id);
+            var user = _context.Users.Find(id);
+            return user == null ? null : _userMapper.Map(user);
         }
     }
 }

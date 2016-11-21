@@ -1,14 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Api.Entities
 {
     public class Animal
     {
         public int ID { get; set; }
+        public string Name { get; set; }
+        public int HappyLevel { get; set; }
+        public int HappyLevelChange{ get; set; }
+        public int HungryLevel { get; set; }
+        public int HungryLevelChange { get; set; }
+        public DateTime LastAction { get; set; }
         public virtual User User { get; set; }
     }
 }

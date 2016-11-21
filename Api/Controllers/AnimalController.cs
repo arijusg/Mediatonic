@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Api.Models;
 using Api.Services;
 
@@ -12,18 +10,31 @@ namespace Api.Controllers
         private readonly IUserService _userService;
         private readonly IAnimalService _animalService;
 
-        public AnimalController( IUserService userService, IAnimalService animalService)
+        public AnimalController(IUserService userService, IAnimalService animalService)
         {
             _userService = userService;
             _animalService = animalService;
+        }
+
+        [Route("user/{id:int}")]
+        [HttpGet]
+        public IHttpActionResult GetUserAnimals(int id)
+        {
+            var user = _userService.GetUser(id);
+            var animals = _animalService.GetUserAnimals(user);
+
+            return Ok(animals);
         }
 
         [Route("feed")]
         [HttpPost]
         public IHttpActionResult Feed(Animal animal)
         {
-            var fedAnimal = new Animal(animal.Id, animal.HappyLevel, animal.HappyDececrement,
-                animal.HungryLevel - 1, animal.HungryIncrement);
+            if(!ModelState.IsValid)
+                return BadRequest();
+
+            _animalService.Feed(animal);
+            var fedAnimal = _animalService.GetAnimal(animal.Id);
             
             return Ok(fedAnimal);
         }
@@ -32,11 +43,13 @@ namespace Api.Controllers
         [HttpPost]
         public IHttpActionResult Pet(Animal animal)
         {
-            var fedAnimal = new Animal(animal.Id, animal.HappyLevel + 1, animal.HappyDececrement,
-                animal.HungryLevel, animal.HungryIncrement);
-
-            return Ok(fedAnimal);
+            if (!ModelState.IsValid)
+                return BadRequest();
+            _animalService.Pet(animal);
+            var petAnimal = _animalService.GetAnimal(animal.Id);
+            return Ok(petAnimal);
         }
 
     }
 }
+
