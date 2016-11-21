@@ -1,7 +1,7 @@
 ﻿using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using Api.Entities;
+using Api.DAL.Entities;
 
 namespace Api.DAL
 {

@@ -11,8 +11,7 @@ Depending on requirements, the whole thing can go under Service Fabric.
 ##### Usage:
 Run: Mediatonic/SelfHost/SelfHost.exe
 Api endpoints:
-- User: localhost:9001/api/user/1
-- Animals: 
--- Get animals for the user (Get) - localhost:9001/api/animal/user/1
--- Pet (Post) - localhost:9001/api/animal/pet
--- Feed (Post) - localhost:9001/api/animal/feed
+- Get User (Get): localhost:9001/api/user/1 
+- Get animals for the user (Get) - localhost:9001/api/animal/user/1
+- Pet (Post) - localhost:9001/api/animal/pet
+- Feed (Post) - localhost:9001/api/animal/feed

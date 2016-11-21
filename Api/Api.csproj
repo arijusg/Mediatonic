@@ -92,8 +92,8 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\GameContext.cs" />
     <Compile Include="DAL\GameInitializer.cs" />
-    <Compile Include="Entities\Animal.cs" />
-    <Compile Include="Entities\User.cs" />
+    <Compile Include="DAL\Entities\Animal.cs" />
+    <Compile Include="DAL\Entities\User.cs" />
     <Compile Include="Interfaces\IAnimalMapper.cs" />
     <Compile Include="Interfaces\IUserMapper.cs" />
     <Compile Include="Models\Animal.cs" />

@@ -5,7 +5,7 @@ namespace Api.Interfaces
 {
     public interface IAnimalMapper
     {
-        Animal Map(Api.Entities.Animal entity);
-        List<Animal> Map(List<Api.Entities.Animal> entities);
+        Animal Map(DAL.Entities.Animal entity);
+        List<Animal> Map(List<DAL.Entities.Animal> entities);
     }
 }

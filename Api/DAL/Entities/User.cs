@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Api.Entities
+namespace Api.DAL.Entities
 {
     public class User
     {

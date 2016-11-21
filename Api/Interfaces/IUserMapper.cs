@@ -1,7 +1,9 @@
-﻿namespace Api.Interfaces
+﻿using Api.DAL.Entities;
+
+namespace Api.Interfaces
 {
     public interface IUserMapper
     {
-        Api.Models.User Map(Api.Entities.User user);
+        Api.Models.User Map(User user);
     }
 }
