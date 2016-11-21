@@ -1,7 +1,6 @@
 ﻿using System.Web.Http;
 using Api.Interfaces;
 using Api.Models;
-using Api.Services;
 
 namespace Api.Controllers
 {
