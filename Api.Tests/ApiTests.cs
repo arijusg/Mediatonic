@@ -8,13 +8,13 @@ using NUnit.Framework;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Api.DAL;
+using Api.Interfaces;
 using Api.Models;
-using Api.Services;
-using Newtonsoft.Json;
 using Ninject;
 
 namespace Api.Tests
 {
+    [TestFixture]
     public class ApiTests
     {
         private TestServer _server;
@@ -39,8 +39,13 @@ namespace Api.Tests
         [SetUp]
         public void Setup()
         {
-            ResetDatabase();
             SetApiTime(_defaultApiTime);
+            ResetDatabase();
+            SetAnimalsWithDefaultApiTime();
+        }
+        private void SetApiTime(DateTime dateTime)
+        {
+            _mockHelper.MockOut<ITestableDateTime>().Setup(x => x.UtcNow()).Returns(dateTime);
         }
 
         private void ResetDatabase()
@@ -48,19 +53,17 @@ namespace Api.Tests
             Startup.Container.Unbind<GameContext>();
             DbConnection effortConnection = Effort.DbConnectionFactory.CreateTransient();
             Startup.Container.Bind<GameContext>().ToSelf().WithConstructorArgument(effortConnection);
-            //TODO Set times
+        }
+
+        private void SetAnimalsWithDefaultApiTime()
+        {
             var context = Startup.Container.Get<GameContext>();
             var animals = context.Animals.ToList();
-            foreach (Entities.Animal animal in animals)
+            foreach (var animal in animals)
             {
                 animal.LastAction = _defaultApiTime;
             }
             context.SaveChanges();
-        }
-
-        private void SetApiTime(DateTime dateTime)
-        {
-            _mockHelper.MockOut<ITestableDateTime>().Setup(x => x.UtcNow()).Returns(dateTime);
         }
 
         [Test]
@@ -156,9 +159,8 @@ namespace Api.Tests
         }
 
         [Test]
-        public async Task TestDecreasingHappiness()
+        public async Task TestDecreasingHappyLevel()
         {
-
             int userId = 1;
 
             var response = await _server.HttpClient.GetAsync($"/api/animal/user/{userId}");
@@ -177,7 +179,7 @@ namespace Api.Tests
         }
 
         [Test]
-        public async Task TestIncreasingHungriness()
+        public async Task TestIncreasingHungryLevel()
         {
 
             int userId = 1;

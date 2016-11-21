@@ -86,7 +86,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnimalProcessor.cs" />
+    <Compile Include="Helpers\AnimalProcessor.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AnimalController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -94,20 +94,24 @@
     <Compile Include="DAL\GameInitializer.cs" />
     <Compile Include="Entities\Animal.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Interfaces\IAnimalMapper.cs" />
+    <Compile Include="Interfaces\IUserMapper.cs" />
     <Compile Include="Models\Animal.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Ninject\NinjectDependencyResolver.cs" />
     <Compile Include="Ninject\NinjectDependencyScope.cs" />
     <Compile Include="Ninject\NinjectServicesModule.cs" />
     <Compile Include="Services\AnimalService.cs" />
-    <Compile Include="Services\IUserService.cs" />
-    <Compile Include="Services\TestableDateTime.cs" />
+    <Compile Include="Interfaces\ITestableDateTime.cs" />
+    <Compile Include="Interfaces\IAnimalService.cs" />
+    <Compile Include="Interfaces\IUserService.cs" />
+    <Compile Include="Helpers\TestableDateTime.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Startup_WebApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="AnimalMapper.cs" />
-    <Compile Include="UserMapper.cs" />
+    <Compile Include="Mappers\AnimalMapper.cs" />
+    <Compile Include="Mappers\UserMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

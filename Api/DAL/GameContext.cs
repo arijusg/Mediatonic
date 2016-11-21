@@ -10,15 +10,10 @@ namespace Api.DAL
         
         public GameContext() : base("GameContext")
         {
-            Init();
+            Database.SetInitializer(new GameInitializer());
         }
 
         public GameContext(DbConnection connection) : base(connection, true)
-        {
-            Init();
-        }
-
-        private void Init()
         {
             Database.SetInitializer(new GameInitializer());
         }

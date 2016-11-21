@@ -1,12 +1,9 @@
 ﻿using System;
+using Api.Interfaces;
+using Api.Services;
 
-namespace Api.Services
+namespace Api.Helpers
 {
-    public interface ITestableDateTime
-    {
-        DateTime UtcNow();
-    }
-
     public class TestableDateTime : ITestableDateTime
     {
         public DateTime UtcNow()

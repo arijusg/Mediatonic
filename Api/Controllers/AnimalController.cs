@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Api.Interfaces;
 using Api.Models;
 using Api.Services;
 
@@ -45,8 +46,10 @@ namespace Api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest();
+
             _animalService.Pet(animal);
             var petAnimal = _animalService.GetAnimal(animal.Id);
+
             return Ok(petAnimal);
         }
 

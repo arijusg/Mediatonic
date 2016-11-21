@@ -1,4 +1,5 @@
 ﻿using Api.DAL;
+using Api.Interfaces;
 using Api.Models;
 
 namespace Api.Services

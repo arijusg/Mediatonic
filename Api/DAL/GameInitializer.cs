@@ -6,7 +6,7 @@ using Api.Entities;
 
 namespace Api.DAL
 {
-    public class GameInitializer : DropCreateDatabaseIfModelChanges<GameContext>
+    public class GameInitializer : DropCreateDatabaseAlways<GameContext>
     {
         protected override void Seed(GameContext context)
         {
@@ -20,8 +20,6 @@ namespace Api.DAL
                 new User {Name = "Lucifier", Animals = new List<Animal> { animal1, animal2 } },
                 new User {Name = "Maze", Animals = new List<Animal> { animal3, animal4} }
             };
-
-
 
             users.ForEach(u => context.Users.AddOrUpdate(u));
             context.SaveChanges();

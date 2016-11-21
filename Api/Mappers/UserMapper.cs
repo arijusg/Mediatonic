@@ -1,10 +1,7 @@
-﻿namespace Api
-{
-    public interface IUserMapper
-    {
-        Api.Models.User Map(Api.Entities.User user);
-    }
+﻿using Api.Interfaces;
 
+namespace Api.Mappers
+{
     public class UserMapper : IUserMapper
     {
         public Api.Models.User Map(Api.Entities.User user)

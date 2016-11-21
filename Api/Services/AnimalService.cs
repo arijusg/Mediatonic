@@ -1,17 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Api.DAL;
+using Api.Helpers;
+using Api.Interfaces;
 using Api.Models;
 
 namespace Api.Services
 {
-    public interface IAnimalService
-    {
-        List<Animal> GetUserAnimals(User user);
-        void Feed(Animal animal);
-        Animal GetAnimal(int id);
-        void Pet(Animal animal);
-    }
     public class AnimalService : IAnimalService
     {
         private readonly ITestableDateTime _testableDateTime;

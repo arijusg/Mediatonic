@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Api.Interfaces;
 using Api.Models;
 using Api.Services;
 
-namespace Api
+namespace Api.Helpers
 {
     public interface IAnimalProcessor
     {
